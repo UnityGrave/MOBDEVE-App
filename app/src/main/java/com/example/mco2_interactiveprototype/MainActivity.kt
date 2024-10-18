@@ -17,6 +17,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
+
         isLoggedIn = this.intent.getBooleanExtra("LOGGED_IN", false)
 
         if (!isLoggedIn) {
@@ -24,10 +28,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(i)
             return
         }
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-
-        setContentView(binding.root)
 
         // Replace with Home fragment on startup
         replaceFragment(Home())
