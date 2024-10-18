@@ -44,7 +44,7 @@
             android:text="Senate Election Info"
             android:textColor="@color/md_theme_onPrimaryFixedVariant"
             android:textSize="32sp"
-            app:layout_constraintBottom_toTopOf="@+id/btnSignUp"
+            app:layout_constraintBottom_toTopOf="@+id/btnSplashSignUp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtSplashTitle" />
 
         <Button
-            android:id="@+id/btnSignUp"
+            android:id="@+id/btnSplashSignUp"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -72,7 +72,7 @@
             android:text="Sign Up"
             android:textColor="@color/md_theme_primary"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/btnLogIn"
+            app:layout_constraintBottom_toTopOf="@+id/btnSplashLogIn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:rippleColor="@color/md_theme_primaryFixed"
@@ -80,7 +80,7 @@
             app:strokeWidth="2dp" />
 
         <Button
-            android:id="@+id/btnLogIn"
+            android:id="@+id/btnSplashLogIn"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"

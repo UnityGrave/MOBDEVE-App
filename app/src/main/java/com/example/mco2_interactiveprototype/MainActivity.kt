@@ -1,18 +1,32 @@
 package com.example.mco2_interactiveprototype
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.mco2_interactiveprototype.databinding.ActivityMainBinding
+import com.example.mco2_interactiveprototype.databinding.ActivitySplashBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private var isLoggedIn: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        isLoggedIn = this.intent.getBooleanExtra("LOGGED_IN", false)
+
+        if (!isLoggedIn) {
+            val i = Intent(applicationContext, SplashActivity::class.java)
+            startActivity(i)
+            return
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
         // Replace with Home fragment on startup

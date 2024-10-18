@@ -3,4 +3,9 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+    <style name="Text.Auth.Header" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">48sp</item>
+        <item name="fontFamily">@font/roboto_condensed_bold</item>
+        <item name="android:textColor">@color/md_theme_primary</item>
+    </style>
 </resources>
