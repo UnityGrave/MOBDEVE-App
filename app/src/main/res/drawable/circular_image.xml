@@ -2,6 +2,5 @@
     android:shape="oval">
     <solid android:color="#FFFFFF" /> <!-- Background color -->
     <stroke
-        android:width="5dp"
-        android:color="@color/black" /> <!-- Optional border -->
+        android:width="5dp"/>
 </shape>
