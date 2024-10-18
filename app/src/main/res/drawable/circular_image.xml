@@ -3,5 +3,5 @@
     <solid android:color="#FFFFFF" /> <!-- Background color -->
     <stroke
         android:width="5dp"
-        android:color="@color/black" /> <!-- Optional border -->
+        android:color="@android:color/black" /> <!-- Optional border -->
 </shape>
