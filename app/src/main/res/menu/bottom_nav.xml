@@ -4,6 +4,10 @@
     <item android:title="Home"
         android:id="@+id/home"
         android:icon="@drawable/baseline_home_24" />
+    <item
+        android:id="@+id/ballot"
+        android:icon="@drawable/baseline_home_24"
+        android:title="Ballot" />
     <item android:title="Profile"
         android:id="@+id/profile"
         android:icon="@drawable/baseline_person_24" />

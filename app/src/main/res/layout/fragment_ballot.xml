@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Ballot">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/ballot_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Senatorial Ballot"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp" />
+
+    <!-- ScrollView to handle the 12 senate votes -->
+    <ScrollView
+        android:id="@+id/senate_ballot_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/ballot_title"
+        app:layout_constraintBottom_toTopOf="@id/partylist_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Loop for 12 senator votes -->
+            <LinearLayout
+                android:id="@+id/senator_vote_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <!-- Unshaded/Shaded Image (radio-like) -->
+                <ImageView
+                    android:id="@+id/oval_senator_1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/circular_image"
+                    android:layout_marginEnd="8dp" />
+
+                <!-- Dropdown Menu for selecting Senator -->
+                <Spinner
+                    android:id="@+id/dropdown_senator_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+<!--                    android:entries="@array/senatorial_candidates" -->
+
+
+            </LinearLayout>
+
+            <!-- Repeat the above LinearLayout for all 12 senators by adjusting ids -->
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Partylist Section -->
+    <LinearLayout
+        android:id="@+id/partylist_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
+        android:layout_margin="16dp">
+
+        <!-- Unshaded/Shaded Image -->
+        <ImageView
+            android:id="@+id/oval_partylist"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/circular_image"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Dropdown for selecting Partylist -->
+        <Spinner
+            android:id="@+id/dropdown_partylist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+<!--            android:entries="@array/partylist_groups" -->
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
