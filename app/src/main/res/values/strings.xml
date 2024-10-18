@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MCO2_InteractivePrototype</string>
+    <string name="app_name">Senate Election Info</string>
     <string name="settings">Settings fragment</string>
     <string name="profile">Profile fragment</string>
     <string name="home">Home fragment</string>
