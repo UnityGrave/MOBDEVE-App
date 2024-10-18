@@ -1,48 +1,48 @@
 package com.example.mco2_interactiveprototype
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.mco2_interactiveprototype.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Replace with Home fragment on startup
         replaceFragment(Home())
 
-
-        binding.bottomNavigationView.setOnItemSelectedListener {
-            when(it.itemId) {
+        binding.bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
                 R.id.home -> replaceFragment(Home())
                 R.id.profile -> replaceFragment(Profile())
                 R.id.settings -> replaceFragment(Settings())
-
-                else -> {
-
-                }
+                else -> {}
             }
             true
         }
-
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout, fragment)
+        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+    }
+
+    // Method to hide the BottomNavigationView
+    fun hideBottomNavigation() {
+        binding.bottomNavigationView.visibility = View.GONE
+    }
+
+    // Method to show the BottomNavigationView
+    fun showBottomNavigation() {
+        binding.bottomNavigationView.visibility = View.VISIBLE
     }
 }
