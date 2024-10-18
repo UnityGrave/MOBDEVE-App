@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MCO2_InteractivePrototype</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="settings">Settings fragment</string>
+    <string name="profile">Profile fragment</string>
+    <string name="home">Home fragment</string>
 </resources>
