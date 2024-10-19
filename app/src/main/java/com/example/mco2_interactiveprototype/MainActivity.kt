@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.home -> replaceFragment(Home())
                 R.id.profile -> replaceFragment(Profile())
                 R.id.settings -> replaceFragment(Settings())
+                R.id.ballot -> replaceFragment(Ballot())
                 else -> {}
             }
             true

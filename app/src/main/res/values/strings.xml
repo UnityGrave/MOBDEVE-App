@@ -9,4 +9,6 @@
     <string name="hint_password">Password</string>
     <string name="auth_signup">Sign Up</string>
     <string name="auth_login">Log In</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
