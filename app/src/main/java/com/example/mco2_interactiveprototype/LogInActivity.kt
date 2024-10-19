@@ -21,5 +21,10 @@ class LogInActivity: AppCompatActivity() {
             i.putExtra("LOGGED_IN", true)
             startActivity(i)
         }
+
+        binding.txtSignUpLink.setOnClickListener {
+            val i = Intent(applicationContext, SignUpActivity::class.java)
+            startActivity(i)
+        }
     }
 }
