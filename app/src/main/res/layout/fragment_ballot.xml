@@ -55,9 +55,9 @@
                     android:id="@+id/dropdown_senator_1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <!--                    android:entries="@array/senatorial_candidates" -->
-
+                    android:layout_weight="1"
+                    android:entries="@array/senatorial_candidates"
+                    />
 
             </LinearLayout>
 
@@ -83,9 +83,9 @@
                     android:id="@+id/dropdown_senator_2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <!--                    android:entries="@array/senatorial_candidates" -->
-
+                    android:layout_weight="1"
+                    android:entries="@array/senatorial_candidates"
+                    />
 
             </LinearLayout>
 
@@ -111,9 +111,9 @@
                     android:id="@+id/dropdown_senator_3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <!--                    android:entries="@array/senatorial_candidates" -->
-
+                    android:layout_weight="1"
+                    android:entries="@array/senatorial_candidates"
+                    />
 
             </LinearLayout>
 
@@ -139,9 +139,9 @@
                     android:id="@+id/dropdown_senator_4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <!--                    android:entries="@array/senatorial_candidates" -->
-
+                    android:layout_weight="1"
+                    android:entries="@array/senatorial_candidates"
+                    />
 
             </LinearLayout>
 
@@ -167,9 +167,9 @@
                     android:id="@+id/dropdown_senator_5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <!--                    android:entries="@array/senatorial_candidates" -->
-
+                    android:layout_weight="1"
+                    android:entries="@array/senatorial_candidates"
+                    />
 
             </LinearLayout>
 
@@ -195,9 +195,9 @@
                     android:id="@+id/dropdown_senator_6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <!--                    android:entries="@array/senatorial_candidates" -->
-
+                    android:layout_weight="1"
+                    android:entries="@array/senatorial_candidates"
+                    />
 
             </LinearLayout>
 
@@ -223,9 +223,9 @@
                     android:id="@+id/dropdown_senator_7"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <!--                    android:entries="@array/senatorial_candidates" -->
-
+                    android:layout_weight="1"
+                    android:entries="@array/senatorial_candidates"
+                    />
 
             </LinearLayout>
 
@@ -251,9 +251,9 @@
                     android:id="@+id/dropdown_senator_8"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <!--                    android:entries="@array/senatorial_candidates" -->
-
+                    android:layout_weight="1"
+                    android:entries="@array/senatorial_candidates"
+                    />
 
             </LinearLayout>
 
@@ -279,9 +279,9 @@
                     android:id="@+id/dropdown_senator_9"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <!--                    android:entries="@array/senatorial_candidates" -->
-
+                    android:layout_weight="1"
+                    android:entries="@array/senatorial_candidates"
+                    />
 
             </LinearLayout>
 
@@ -307,9 +307,9 @@
                     android:id="@+id/dropdown_senator_10"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <!--                    android:entries="@array/senatorial_candidates" -->
-
+                    android:layout_weight="1"
+                    android:entries="@array/senatorial_candidates"
+                    />
 
             </LinearLayout>
 
@@ -335,9 +335,9 @@
                     android:id="@+id/dropdown_senator_11"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <!--                    android:entries="@array/senatorial_candidates" -->
-
+                    android:layout_weight="1"
+                    android:entries="@array/senatorial_candidates"
+                    />
 
             </LinearLayout>
 
@@ -363,9 +363,9 @@
                     android:id="@+id/dropdown_senator_12"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <!--                    android:entries="@array/senatorial_candidates" -->
-
+                    android:layout_weight="1"
+                    android:entries="@array/senatorial_candidates"
+                    />
 
             </LinearLayout>
 
@@ -408,9 +408,9 @@
             android:id="@+id/dropdown_partylist"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-<!--            android:entries="@array/partylist_groups" />-->
-
+            android:layout_weight="1"
+            android:entries="@array/partylist_groups"
+            />
 
     </LinearLayout>
 

@@ -9,4 +9,29 @@
     <string name="hint_password">Password</string>
     <string name="auth_signup">Sign Up</string>
     <string name="auth_login">Log In</string>
+
+    <!-- Array for Senator Candidates -->
+    <string-array name="senatorial_candidates">
+        <item>John Doe</item>
+        <item>Maria Santos</item>
+        <item>Juan Dela Cruz</item>
+        <item>Anna Reyes</item>
+        <item>Michael Tan</item>
+        <item>David Garcia</item>
+        <item>Sophia Mendoza</item>
+        <item>Ricardo Flores</item>
+        <item>Isabella Martinez</item>
+        <item>Josefina Ramos</item>
+        <item>Carlos Villanueva</item>
+        <item>Lucas Hernandez</item>
+    </string-array>
+
+    <!-- Array for Partylist Groups -->
+    <string-array name="partylist_groups">
+        <item>Partylist A</item>
+        <item>Partylist B</item>
+        <item>Partylist C</item>
+        <item>Partylist D</item>
+        <item>Partylist E</item>
+    </string-array>
 </resources>
