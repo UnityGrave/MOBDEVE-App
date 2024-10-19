@@ -2,8 +2,6 @@ package com.example.mco2_interactiveprototype
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mco2_interactiveprototype.databinding.ActivitySplashBinding
 
@@ -19,6 +17,11 @@ class SplashActivity: AppCompatActivity() {
 
         binding.btnSplashSignUp.setOnClickListener {
             val i = Intent(applicationContext, SignUpActivity::class.java)
+            startActivity(i)
+        }
+
+        binding.btnSplashLogIn.setOnClickListener {
+            val i = Intent(applicationContext, LogInActivity::class.java)
             startActivity(i)
         }
     }

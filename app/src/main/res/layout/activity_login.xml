@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgLogInLogo"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtLogInDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtHeaderLogIn"
+        app:srcCompat="@drawable/ic_app_logo" />
+
+    <TextView
+        android:id="@+id/txtHeaderLogIn"
+        style="@style/Text.Auth.Header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:text="@string/auth_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtLogInDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Please login to continue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeaderLogIn" />
+
+    <LinearLayout
+        android:id="@+id/grpLogInForm"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="64dp"
+        android:orientation="vertical"
+        android:padding="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLogInDescription">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLogInEmailLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:hint="Email Address">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputLogInEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLogInPasswordLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:hint="Password"
+            app:endIconMode="password_toggle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputLogInPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnLogIn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/auth_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/grpLogInForm" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogIn">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Don't have an account? " />
+
+        <TextView
+            android:id="@+id/txtSignUpLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/auth_signup"
+            android:textColor="?attr/colorPrimary" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
