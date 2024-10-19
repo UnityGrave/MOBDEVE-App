@@ -1,11 +1,13 @@
 package com.example.mco2_interactiveprototype
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+
 
 class Profile : Fragment(R.layout.fragment_profile) {
     private lateinit var logout: Button
@@ -21,20 +23,18 @@ class Profile : Fragment(R.layout.fragment_profile) {
 
         // Set the onClickListener to navigate to LoginFragment
         logout.setOnClickListener {
-            // Hide the BottomNavigationView
-            (activity as MainActivity).hideBottomNavigation()
-
-            // TODO: replaceFragment(Login()) ---> link here the Login fragment page
+            val intent = Intent(activity, LogInActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
         }
 
         return view
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        // Use parentFragmentManager to manage fragment transactions in a fragment
         val fragmentTransaction = parentFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout, fragment)
-        fragmentTransaction.addToBackStack(null)  // This allows the user to press back to return to Profile fragment
+        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
 }

@@ -8,11 +8,6 @@ import android.view.ViewGroup
 
 class Home : Fragment() {
 
-    override fun onResume() {
-        super.onResume()
-        (activity as MainActivity).showBottomNavigation()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

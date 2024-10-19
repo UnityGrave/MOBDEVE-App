@@ -45,20 +45,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Method to replace fragments
     private fun replaceFragment(fragment: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout, fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
-    }
-
-    // Method to hide the BottomNavigationView
-    fun hideBottomNavigation() {
-        binding.bottomNavigationView.visibility = View.GONE
-    }
-
-    // Method to show the BottomNavigationView
-    fun showBottomNavigation() {
-        binding.bottomNavigationView.visibility = View.VISIBLE
     }
 }
