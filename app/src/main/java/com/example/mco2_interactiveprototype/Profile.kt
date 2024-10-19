@@ -25,7 +25,6 @@ class Profile : Fragment(R.layout.fragment_profile) {
         logout.setOnClickListener {
             val intent = Intent(activity, LogInActivity::class.java)
             startActivity(intent)
-            activity?.finish()
         }
 
         return view
