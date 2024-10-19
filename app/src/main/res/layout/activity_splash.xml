@@ -75,7 +75,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:rippleColor="@color/md_theme_primaryFixed"
-            app:strokeColor="@color/md_theme_primary"
+            app:strokeColor="?attr/colorPrimary"
             app:strokeWidth="2dp" />
 
         <Button
