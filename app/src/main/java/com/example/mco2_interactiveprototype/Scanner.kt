@@ -16,8 +16,7 @@ import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 
 class Scanner : Fragment() {
-
-    // ActivityResultLauncher for camera permission request
+    
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
@@ -27,17 +26,15 @@ class Scanner : Fragment() {
             }
         }
 
-    // ActivityResultLauncher for barcode scanning
     private val scanLauncher =
         registerForActivityResult(ScanContract()) { result: ScanIntentResult ->
             if (result.contents == null) {
                 Toast.makeText(requireContext(), "Cancelled", Toast.LENGTH_SHORT).show()
             } else {
-                setResult(result.contents)  // Handle scanned result
+                setResult(result.contents)
             }
         }
 
-    // Display the scanned result in a TextView (assuming you have one)
     private fun setResult(scannedResult: String) {
         val resultTextView: TextView? = view?.findViewById(R.id.resultTV)
         resultTextView?.text = scannedResult
