@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MCO2_InteractivePrototype"
+rootProject.name = "MOBDEVE-SenateElectionInfo"
 include(":app")
