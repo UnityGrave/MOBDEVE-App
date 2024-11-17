@@ -1,4 +1,4 @@
-package com.example.mco2_interactiveprototype.model
+package com.mobdeve.senateelectioninfo.model
 
 class AccountItem(var accountID: Int, var username: String, var password: String) {
     companion object {

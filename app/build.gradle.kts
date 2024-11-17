@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.mco2_interactiveprototype"
+    namespace = "com.mobdeve.senateelectioninfo"
     compileSdk = 34
 
     defaultConfig {

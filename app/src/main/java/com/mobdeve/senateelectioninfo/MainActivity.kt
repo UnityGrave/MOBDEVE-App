@@ -1,12 +1,10 @@
-package com.example.mco2_interactiveprototype
+package com.mobdeve.senateelectioninfo
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.mco2_interactiveprototype.databinding.ActivityMainBinding
-import com.example.mco2_interactiveprototype.databinding.ActivitySplashBinding
+import com.mobdeve.senateelectioninfo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 

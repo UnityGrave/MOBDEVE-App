@@ -1,4 +1,4 @@
-package com.example.mco2_interactiveprototype
+package com.mobdeve.senateelectioninfo
 
 import android.content.Intent
 import android.os.Bundle

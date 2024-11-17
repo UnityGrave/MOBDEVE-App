@@ -1,9 +1,9 @@
-package com.example.mco2_interactiveprototype
+package com.mobdeve.senateelectioninfo
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mco2_interactiveprototype.databinding.ActivitySignupBinding
+import com.mobdeve.senateelectioninfo.databinding.ActivitySignupBinding
 
 class SignUpActivity: AppCompatActivity() {
 

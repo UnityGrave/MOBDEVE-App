@@ -1,9 +1,9 @@
-package com.example.mco2_interactiveprototype.database
+package com.mobdeve.senateelectioninfo.database
 
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteException
-import com.example.mco2_interactiveprototype.model.AccountItem
+import com.mobdeve.senateelectioninfo.model.AccountItem
 import android.content.Context
 
 class DatabaseOperations(context: Context) {
@@ -37,7 +37,8 @@ class DatabaseOperations(context: Context) {
             put(DatabaseHandler.ACCOUNT_PASSWORD, account.password)
         }
 
-        db.update(DatabaseHandler.ACCOUNT_TABLE, contentValues, "${DatabaseHandler.ACCOUNT_ID} = ?",
+        db.update(
+            DatabaseHandler.ACCOUNT_TABLE, contentValues, "${DatabaseHandler.ACCOUNT_ID} = ?",
             arrayOf(account.accountID.toString()))
 
         db.close()
@@ -46,7 +47,8 @@ class DatabaseOperations(context: Context) {
     fun deleteAccount(account: AccountItem) {
         val db = databaseHandler.writableDatabase
 
-        db.delete(DatabaseHandler.ACCOUNT_TABLE, "${DatabaseHandler.ACCOUNT_ID} = ?",
+        db.delete(
+            DatabaseHandler.ACCOUNT_TABLE, "${DatabaseHandler.ACCOUNT_ID} = ?",
             arrayOf(account.accountID.toString()))
 
         db.close()

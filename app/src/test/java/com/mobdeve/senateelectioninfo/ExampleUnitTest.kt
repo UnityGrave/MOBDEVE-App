@@ -1,4 +1,4 @@
-package com.example.mco2_interactiveprototype
+package com.mobdeve.senateelectioninfo
 
 import org.junit.Test
 

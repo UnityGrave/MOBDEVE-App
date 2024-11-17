@@ -1,4 +1,4 @@
-package com.example.mco2_interactiveprototype.database
+package com.mobdeve.senateelectioninfo.database
 
 import android.content.ContentValues
 import android.content.Context

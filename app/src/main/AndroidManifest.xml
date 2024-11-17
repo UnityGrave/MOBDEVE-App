@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_app_logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MCO2_InteractivePrototype"
+        android:theme="@style/Theme.SenateElectionInfo"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
