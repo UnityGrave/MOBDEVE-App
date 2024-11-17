@@ -28,15 +28,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Replace with Home fragment on startup
-        replaceFragment(Home())
+        replaceFragment(HomeFragment())
 
         binding.bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.home -> replaceFragment(Home())
-                R.id.profile -> replaceFragment(Profile())
-                R.id.settings -> replaceFragment(Settings())
-                R.id.ballot -> replaceFragment(Ballot())
-                R.id.scanner -> replaceFragment(Scanner())
+                R.id.home -> replaceFragment(HomeFragment())
+                R.id.profile -> replaceFragment(ProfileFragment())
+                R.id.settings -> replaceFragment(SettingsFragment())
+                R.id.ballot -> replaceFragment(BallotFragment())
+                R.id.scanner -> replaceFragment(ScannerFragment())
                 else -> {}
             }
             true

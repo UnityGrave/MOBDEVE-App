@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 
 
-class Profile : Fragment(R.layout.fragment_profile) {
+class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private lateinit var logout: Button
 
     override fun onCreateView(
