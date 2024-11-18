@@ -26,9 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashActivity"/>
-        <activity android:name=".SignUpActivity"/>
-        <activity android:name=".LogInActivity"/>
+        <activity android:name=".splash.SplashActivity"/>
+        <activity android:name=".auth.view.sign_up.SignUpActivity"/>
+        <activity android:name=".auth.view.log_in.LogInActivity"/>
         <activity android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="android:screenOrientation"/>

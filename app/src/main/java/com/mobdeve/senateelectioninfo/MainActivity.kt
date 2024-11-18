@@ -1,30 +1,39 @@
 package com.mobdeve.senateelectioninfo
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.FirebaseApp
+import com.mobdeve.senateelectioninfo.auth.model.service.AccountService
+import com.mobdeve.senateelectioninfo.auth.model.service.impl.AccountServiceImpl
 import com.mobdeve.senateelectioninfo.databinding.ActivityMainBinding
+import com.mobdeve.senateelectioninfo.splash.SplashModelViewFactory
+import com.mobdeve.senateelectioninfo.splash.SplashViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var splashViewModel: SplashViewModel
 
-    private var isLoggedIn: Boolean = false
+    private lateinit var accountService: AccountService
+
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        FirebaseApp.initializeApp(this)
 
+        accountService = AccountServiceImpl()
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        isLoggedIn = this.intent.getBooleanExtra("LOGGED_IN", false)
-
-        if (!isLoggedIn) {
-            val i = Intent(applicationContext, SplashActivity::class.java)
-            startActivity(i)
-            return
+        splashViewModel = ViewModelProvider(this, SplashModelViewFactory(accountService, this.application)).get(SplashViewModel::class.java)
+        val splashIntent = splashViewModel.checkLoggedInState()
+        if (splashIntent != null) {
+            startActivity(splashIntent)
+            finish()
         }
 
         // Replace with Home fragment on startup

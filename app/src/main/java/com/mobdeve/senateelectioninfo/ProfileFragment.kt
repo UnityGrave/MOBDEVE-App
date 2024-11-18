@@ -7,6 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.lifecycle.lifecycleScope
+import com.mobdeve.senateelectioninfo.auth.model.service.impl.AccountServiceImpl
+import com.mobdeve.senateelectioninfo.splash.SplashActivity
+import kotlinx.coroutines.launch
 
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -23,8 +27,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         // Set the onClickListener to navigate to LoginFragment
         logout.setOnClickListener {
-            val intent = Intent(activity, LogInActivity::class.java)
-            startActivity(intent)
+            viewLifecycleOwner.lifecycleScope.launch {
+                AccountServiceImpl().signOut()
+                val intent = Intent(activity, SplashActivity::class.java)
+                startActivity(intent)
+                activity?.finish()
+            }
         }
 
         return view
