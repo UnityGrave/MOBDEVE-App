@@ -10,7 +10,12 @@ interface AccountService {
     val currentUserId: String
     fun hasUser(): Boolean
     suspend fun logIn(email: String, password: String): Boolean
-    suspend fun signUp(email: String, password: String): Boolean
+    suspend fun signUp(
+        email: String, password: String,
+        firstName: String, lastName: String,
+        birthday: String, contactNumber: String): Boolean
     suspend fun signOut()
     suspend fun deleteAccount()
+    suspend fun updateProfile(user: User): Boolean
+    suspend fun getProfile(): User?
 }

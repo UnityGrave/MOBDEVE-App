@@ -8,12 +8,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.mobdeve.senateelectioninfo.auth.model.User
 import com.mobdeve.senateelectioninfo.auth.model.service.AccountService
+import com.mobdeve.senateelectioninfo.auth.model.service.UserProfileService
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class AccountServiceImpl : AccountService {
+
+    private val userProfileService: UserProfileService = UserProfileServiceImpl()
 
     companion object {
         private val instance: AccountService = AccountServiceImpl()
@@ -25,8 +29,15 @@ class AccountServiceImpl : AccountService {
 
     override val currentUser: Flow<User?>
         get() = callbackFlow {
-            val listener = FirebaseAuth.AuthStateListener { auth ->
-                this.trySend(auth.currentUser?.let { User(it.uid) })
+            val listener = FirebaseAuth.AuthStateListener { user ->
+                launch {
+                if (user != null) {
+                    val userProfile = userProfileService.getUserProfile(user.uid!!)
+                    trySend(userProfile)
+                } else {
+                    trySend(null)
+                }
+                    }
             }
             Firebase.auth.addAuthStateListener(listener)
             awaitClose { Firebase.auth.removeAuthStateListener(listener) }
@@ -49,9 +60,22 @@ class AccountServiceImpl : AccountService {
         }
     }
 
-    override suspend fun signUp(email: String, password: String): Boolean {
+    override suspend fun signUp(
+        email: String, password: String,
+        firstName: String, lastName: String,
+        birthday: String, contactNumber: String): Boolean {
         return try {
-            Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+            val signUpResult = Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+            val userId = signUpResult.user?.uid.orEmpty()
+            val user = User(
+                id = userId,
+                firstName = firstName,
+                lastName = lastName,
+                birthday = birthday,
+                contactNumber = contactNumber,
+                profilePicture = ""
+            )
+            userProfileService.updateUserProfile(user)
             true
         } catch (e: Exception) {
             Log.e("AccountService", "Sign-up error", e)
@@ -65,5 +89,14 @@ class AccountServiceImpl : AccountService {
 
     override suspend fun deleteAccount() {
         Firebase.auth.currentUser!!.delete().await()
+    }
+
+    override suspend fun updateProfile(user: User): Boolean {
+        return userProfileService.updateUserProfile(user)
+    }
+
+    override suspend fun getProfile(): User? {
+        val userId = currentUserId
+        return userProfileService.getUserProfile(userId)
     }
 }

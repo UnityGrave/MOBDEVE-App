@@ -16,6 +16,8 @@ class SignUpViewModel(
 
     val firstName = MutableStateFlow("")
     val lastName = MutableStateFlow("")
+    val birthday = MutableStateFlow("")
+    val contactNumber = MutableStateFlow("")
     val email = MutableStateFlow("")
     val password = MutableStateFlow("")
 
@@ -25,6 +27,14 @@ class SignUpViewModel(
 
     fun updateLastName(lastName: String) {
         this.lastName.value = lastName
+    }
+
+    fun updateBirthday(birthday: String) {
+        this.birthday.value = birthday
+    }
+
+    fun updateContactNumber(contactNumber: String) {
+        this.contactNumber.value = contactNumber
     }
 
     fun updateEmail(email: String) {
@@ -42,7 +52,11 @@ class SignUpViewModel(
                 return@launch
             }
 
-            val task = accountService.signUp(email.value, password.value)
+            val task = accountService.signUp(
+                email.value, password.value,
+                firstName.value, lastName.value,
+                birthday.value, contactNumber.value
+            )
 
             callback(task)
         }

@@ -7,7 +7,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.mobdeve.senateelectioninfo.MainActivity
 import com.mobdeve.senateelectioninfo.auth.AuthValidator
 import com.mobdeve.senateelectioninfo.auth.model.service.impl.AccountServiceImpl
@@ -20,6 +22,8 @@ class SignUpActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivitySignupBinding
 
+    private lateinit var pagerAdapter: SignUpPagerAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,55 +32,128 @@ class SignUpActivity: AppCompatActivity() {
 
         binding = ActivitySignupBinding.inflate(layoutInflater)
 
+        pagerAdapter = SignUpPagerAdapter(this)
+        binding.viewPagerSignUp.adapter = pagerAdapter
+        binding.signUpProgress.progress = 1
+
         setContentView(binding.root)
 
-        val inputFirstName = binding.inputSignUpFirstName
-        val inputLastName = binding.inputSignUpLastName
-        val inputEmail = binding.inputSignUpEmail
-        val inputPassword = binding.inputSignUpPassword
+        val inputFirstName = viewModel.firstName.value
+        val inputLastName = viewModel.lastName.value
+        val inputBirthday = viewModel.birthday.value
+        val inputContactNumber = viewModel.contactNumber.value
+        val inputEmail = viewModel.email.value
+        val inputPassword = viewModel.password.value
 
         val imgLogo = binding.imgSignUpLogo
         val progressBar = binding.progressBarSignUp
 
-        inputFirstName.doOnTextChanged { text, _, _, _ ->
-            viewModel.updateFirstName(text.toString())
-            binding.inputSignUpFirstNameLayout.error = ""
-        }
+        binding.btnSignUp.text = "Next"
 
-        inputLastName.doOnTextChanged { text, _, _, _ ->
-            viewModel.updateLastName(text.toString())
-            binding.inputSignUpLastNameLayout.error = ""
-        }
+        var currentFragment: Fragment? = null
+        binding.viewPagerSignUp.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
 
-        inputEmail.doOnTextChanged { text, _, _, _ ->
-            viewModel.updateEmail(text.toString())
-            binding.inputSignUpEmailLayout.error = ""
-        }
+                if (position == 1 &&
+                    (viewModel.firstName.value.isBlank() || viewModel.lastName.value.isBlank())
+                    ) {
+                    (pagerAdapter.getFragment(0) as SignUpPage1Fragment).setErrorMessages(
+                        if (viewModel.firstName.value.isBlank()) "Please enter your first name" else null,
+                        if (viewModel.lastName.value.isBlank()) "Please enter your last name" else null
+                    )
+                    binding.viewPagerSignUp.setCurrentItem(0, true)
 
-        inputPassword.doOnTextChanged { text, _, _, _ ->
-            viewModel.updatePassword(text.toString())
-            binding.inputSignUpPasswordLayout.error = ""
-        }
+                    return
+                }
+
+                if (position == 2 &&
+                    (viewModel.birthday.value.isBlank() || viewModel.contactNumber.value.isBlank() ||
+                     viewModel.contactNumber.value.length < 11)
+                ) {
+                    (pagerAdapter.getFragment(1) as SignUpPage2Fragment).setErrorMessages(
+                        if (viewModel.birthday.value.isBlank()) "Please enter your birthday" else null,
+                        if (viewModel.contactNumber.value.isBlank()) "Please enter your contact number"
+                        else if (viewModel.contactNumber.value.length < 11) "Contact number must be in this format: 09XXXXXXXXX"
+                        else null
+                    )
+                    binding.viewPagerSignUp.setCurrentItem(1, true)
+
+                    return
+                }
+
+                if (position == 3 &&
+                    (viewModel.email.value.isBlank() || viewModel.password.value.isBlank() ||
+                     !AuthValidator.isValidEmail(viewModel.email.value) || !AuthValidator.isValidPassword(viewModel.password.value))
+                ) {
+                    (pagerAdapter.getFragment(3) as SignUpPage3Fragment).setErrorMessages(
+                        if (viewModel.email.value.isBlank()) "Please enter your email address"
+                        else if (!AuthValidator.isValidEmail(viewModel.email.value)) "Please enter a valid email address"
+                        else null,
+                        if (viewModel.password.value.isBlank()) "Please enter your password"
+                        else if (!AuthValidator.isValidPassword(viewModel.password.value)) "Password must contain at least 8 characters"
+                        else null
+                    )
+                    binding.viewPagerSignUp.setCurrentItem(2, true)
+
+                    return
+                }
+
+                binding.signUpProgress.setProgress(position + 1, true)
+
+                if (position == pagerAdapter.itemCount - 1) {
+                    binding.btnSignUp.text = "Sign Up"
+                } else {
+                    binding.btnSignUp.text = "Next"
+                }
+            }
+        })
 
         binding.btnSignUp.setOnClickListener {
-            if (inputFirstName.text?.isBlank() == true || inputLastName.text?.isBlank() == true ||
-                !AuthValidator.isValidEmail(inputEmail.text.toString()) || !AuthValidator.isValidPassword(inputPassword.text.toString())) {
-                if (inputFirstName.text?.isBlank() == true) {
-                    binding.inputSignUpFirstNameLayout.error = "Please enter your first name"
-                }
+            val currentPage = binding.viewPagerSignUp.currentItem
 
-                if (inputLastName.text?.isBlank() == true) {
-                    binding.inputSignUpLastNameLayout.error = "Please enter your last name"
+            when (currentPage) {
+                0 -> {
+                    if (viewModel.firstName.value.isBlank() || viewModel.lastName.value.isBlank()) {
+                        (pagerAdapter.getFragment(0) as SignUpPage1Fragment).setErrorMessages(
+                            if (viewModel.firstName.value.isBlank()) "Please enter your first name" else null,
+                            if (viewModel.lastName.value.isBlank()) "Please enter your last name" else null
+                        )
+                        return@setOnClickListener
+                    }
                 }
-
-                if (!AuthValidator.isValidEmail(inputEmail.text.toString())) {
-                    binding.inputSignUpEmailLayout.error = "Invalid email address"
+                1 -> {
+                    if (viewModel.birthday.value.isBlank() || viewModel.contactNumber.value.isBlank() ||
+                        viewModel.contactNumber.value.length < 11
+                    ) {
+                        (pagerAdapter.getFragment(1) as SignUpPage2Fragment).setErrorMessages(
+                            if (viewModel.birthday.value.isBlank()) "Please enter your birthday" else null,
+                            if (viewModel.contactNumber.value.isBlank()) "Please enter your contact number"
+                            else if (viewModel.contactNumber.value.length < 11) "Contact number must be in this format: 09XXXXXXXXX"
+                            else null
+                        )
+                        return@setOnClickListener
+                    }
                 }
-
-                if (!AuthValidator.isValidPassword(inputPassword.text.toString())) {
-                    binding.inputSignUpPasswordLayout.error = "Password must contain at least 8 characters"
+                2 -> {
+                    if (viewModel.email.value.isBlank() || viewModel.password.value.isBlank() ||
+                        !AuthValidator.isValidEmail(viewModel.email.value) || !AuthValidator.isValidPassword(viewModel.password.value)
+                    ) {
+                        (pagerAdapter.getFragment(2) as SignUpPage3Fragment).setErrorMessages(
+                            if (viewModel.email.value.isBlank()) "Please enter your email address"
+                            else if (!AuthValidator.isValidEmail(viewModel.email.value)) "Please enter a valid email address"
+                            else null,
+                            if (viewModel.password.value.isBlank()) "Please enter your password"
+                            else if (!AuthValidator.isValidPassword(viewModel.password.value)) "Password must contain at least 8 characters"
+                            else null
+                        )
+                        return@setOnClickListener
+                    }
                 }
+            }
 
+            if (currentPage < pagerAdapter.itemCount - 1) {
+                binding.viewPagerSignUp.setCurrentItem(currentPage + 1, true)
                 return@setOnClickListener
             }
 
