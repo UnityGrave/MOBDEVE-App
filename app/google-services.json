@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "978804015428",
+    "project_id": "mobdeve-senateelectioninfo",
+    "storage_bucket": "mobdeve-senateelectioninfo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978804015428:android:c1faf526afe25b3912d711",
+        "android_client_info": {
+          "package_name": "com.mobdeve.senateelectioninfo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCURGgYSYY3Of8jl31ySJqAVAtdzAFs9Yg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
