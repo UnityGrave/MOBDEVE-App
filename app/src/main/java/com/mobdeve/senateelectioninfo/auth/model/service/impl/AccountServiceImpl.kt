@@ -69,6 +69,7 @@ class AccountServiceImpl : AccountService {
             val userId = signUpResult.user?.uid.orEmpty()
             val user = User(
                 id = userId,
+                email = email,
                 firstName = firstName,
                 lastName = lastName,
                 birthday = birthday,
