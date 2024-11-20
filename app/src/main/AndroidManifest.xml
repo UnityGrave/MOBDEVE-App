@@ -27,8 +27,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".splash.SplashActivity"/>
-        <activity android:name=".auth.view.sign_up.SignUpActivity"/>
-        <activity android:name=".auth.view.log_in.LogInActivity"/>
+        <activity
+            android:name=".auth.view.sign_up.SignUpActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            />
+        <activity
+            android:name=".auth.view.log_in.LogInActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            />
         <activity android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="android:screenOrientation"/>
