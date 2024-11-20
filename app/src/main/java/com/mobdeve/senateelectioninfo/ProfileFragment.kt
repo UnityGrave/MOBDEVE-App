@@ -23,6 +23,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private lateinit var binding: FragmentProfileBinding
 
+    private val accountService = AccountServiceImpl.getInstance()
+
     private lateinit var logout: Button
     private lateinit var editProfile: ImageButton
     private lateinit var profileName: TextView
@@ -32,10 +34,16 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private lateinit var profileContactNumber: TextView
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Initialize views
         logout = binding.btnLogout
@@ -46,13 +54,21 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         profileBirthday = binding.profileBirthday // Add ID for birthday if missing
         profileContactNumber = binding.profileContactNumber // Add ID for contact number if missing
 
-        // Load user profile from Firestore
-        loadUserProfile()
+        if (accountService.hasUser()) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val userProfile = accountService.getProfile()!!
+
+                profileName.text = userProfile.firstName + " " + userProfile.lastName
+                profileEmail.text = userProfile.email
+                profileBirthday.text = userProfile.birthday
+                profileContactNumber.text = userProfile.contactNumber
+            }
+        }
 
         // Logout functionality
         logout.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
-                AccountServiceImpl().signOut()
+                accountService.signOut()
                 val intent = Intent(activity, SplashActivity::class.java)
                 startActivity(intent)
                 activity?.finish()
@@ -62,39 +78,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         // Edit profile functionality
         editProfile.setOnClickListener {
             replaceFragment(EditProfileFragment())
-        }
-
-        return view
-    }
-
-    private fun loadUserProfile() {
-        val db = FirebaseFirestore.getInstance()
-        val userEmail = FirebaseAuth.getInstance().currentUser?.email // Ensure user is authenticated
-
-        if (userEmail != null) {
-            db.collection("users")
-                .whereEqualTo("email", userEmail)
-                .get()
-                .addOnSuccessListener { documents ->
-                    if (!documents.isEmpty) {
-                        val user = documents.documents[0].data
-                        if (user != null) {
-                            // Update UI with user details
-                            profileName.text = "${user["firstName"]} ${user["lastName"]}"
-                            profilePosition.text = "Position: User" // Adjust if position is part of the profile
-                            profileEmail.text = user["email"] as String
-                            profileBirthday.text = user["birthday"] as String
-                            profileContactNumber.text = user["contactNumber"] as String
-                        }
-                    } else {
-                        Toast.makeText(context, "User profile not found", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Toast.makeText(context, "Failed to load profile: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-        } else {
-            Toast.makeText(context, "User is not logged in", Toast.LENGTH_SHORT).show()
         }
     }
 
