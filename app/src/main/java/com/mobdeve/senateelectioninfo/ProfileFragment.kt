@@ -14,11 +14,15 @@ import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.senateelectioninfo.auth.model.service.impl.AccountServiceImpl
+import com.mobdeve.senateelectioninfo.databinding.FragmentProfileBinding
 import com.mobdeve.senateelectioninfo.splash.SplashActivity
 import kotlinx.coroutines.launch
 
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
+
+    private lateinit var binding: FragmentProfileBinding
+
     private lateinit var logout: Button
     private lateinit var editProfile: ImageButton
     private lateinit var profileName: TextView
@@ -31,16 +35,16 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         // Initialize views
-        logout = view.findViewById(R.id.btn_logout)
-        editProfile = view.findViewById(R.id.editProfileBtn)
-        profileName = view.findViewById(R.id.profile_name)
-        profilePosition = view.findViewById(R.id.profile_position) // Change this to a dynamic field if needed
-        profileEmail = view.findViewById(R.id.profileEmail) // Use the correct ID for email
-        profileBirthday = view.findViewById(R.id.profileBirthday) // Add ID for birthday if missing
-        profileContactNumber = view.findViewById(R.id.profileContactNumber) // Add ID for contact number if missing
+        logout = binding.btnLogout
+        editProfile = binding.editProfileBtn
+        profileName = binding.profileName
+        profilePosition = binding.profilePosition // Change this to a dynamic field if needed
+        profileEmail = binding.profileEmail // Use the correct ID for email
+        profileBirthday = binding.profileBirthday // Add ID for birthday if missing
+        profileContactNumber = binding.profileContactNumber // Add ID for contact number if missing
 
         // Load user profile from Firestore
         loadUserProfile()
