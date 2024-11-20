@@ -69,12 +69,12 @@ class SignUpActivity: AppCompatActivity() {
 
                 if (position == 2 &&
                     (viewModel.birthday.value.isBlank() || viewModel.contactNumber.value.isBlank() ||
-                     viewModel.contactNumber.value.length < 11)
+                     !AuthValidator.isValidContactNumber(viewModel.contactNumber.value))
                 ) {
                     (pagerAdapter.getFragment(1) as SignUpPage2Fragment).setErrorMessages(
                         if (viewModel.birthday.value.isBlank()) "Please enter your birthday" else null,
                         if (viewModel.contactNumber.value.isBlank()) "Please enter your contact number"
-                        else if (viewModel.contactNumber.value.length < 11) "Contact number must be in this format: 09XXXXXXXXX"
+                        else if (!AuthValidator.isValidContactNumber(viewModel.contactNumber.value)) "Contact number must be in this format: 09XXXXXXXXX"
                         else null
                     )
                     binding.viewPagerSignUp.setCurrentItem(1, true)
@@ -124,12 +124,12 @@ class SignUpActivity: AppCompatActivity() {
                 }
                 1 -> {
                     if (viewModel.birthday.value.isBlank() || viewModel.contactNumber.value.isBlank() ||
-                        viewModel.contactNumber.value.length < 11
+                        !AuthValidator.isValidContactNumber(viewModel.contactNumber.value)
                     ) {
                         (pagerAdapter.getFragment(1) as SignUpPage2Fragment).setErrorMessages(
                             if (viewModel.birthday.value.isBlank()) "Please enter your birthday" else null,
                             if (viewModel.contactNumber.value.isBlank()) "Please enter your contact number"
-                            else if (viewModel.contactNumber.value.length < 11) "Contact number must be in this format: 09XXXXXXXXX"
+                            else if (!AuthValidator.isValidContactNumber(viewModel.contactNumber.value)) "Contact number must be in this format: 09XXXXXXXXX"
                             else null
                         )
                         return@setOnClickListener
