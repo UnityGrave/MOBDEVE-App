@@ -1,28 +1,23 @@
 package com.mobdeve.senateelectioninfo
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.Fragment
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.FirebaseFirestore
-import com.mobdeve.senateelectioninfo.auth.model.service.impl.AccountServiceImpl
-import com.mobdeve.senateelectioninfo.splash.SplashActivity
-import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
-    private lateinit var saveButton: Button
-    private lateinit var inputFirstName: EditText
-    private lateinit var inputLastName: EditText
-    private lateinit var inputEmail: EditText
-    private lateinit var inputBirthday: EditText
-    private lateinit var inputContactNumber: EditText
+
+    private lateinit var saveButton: MaterialButton
+    private lateinit var inputFirstName: TextInputEditText
+    private lateinit var inputLastName: TextInputEditText
+    private lateinit var inputEmail: TextInputEditText
+    private lateinit var inputBirthday: TextInputEditText
+    private lateinit var inputContactNumber: TextInputEditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,11 +34,11 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         inputContactNumber = view.findViewById(R.id.inputContactNumber)
 
         saveButton.setOnClickListener {
-            val firstName = inputFirstName.text.toString()
-            val lastName = inputLastName.text.toString()
-            val email = inputEmail.text.toString()
-            val birthday = inputBirthday.text.toString()
-            val contactNumber = inputContactNumber.text.toString()
+            val firstName = inputFirstName.text.toString().trim()
+            val lastName = inputLastName.text.toString().trim()
+            val email = inputEmail.text.toString().trim()
+            val birthday = inputBirthday.text.toString().trim()
+            val contactNumber = inputContactNumber.text.toString().trim()
 
             if (validateInputs(firstName, lastName, email, birthday, contactNumber)) {
                 saveFireStore(firstName, lastName, email, contactNumber, birthday)
@@ -64,6 +59,17 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             Toast.makeText(context, "All fields must be filled", Toast.LENGTH_SHORT).show()
             return false
         }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(context, "Invalid email format", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (contactNumber.length != 11 || !contactNumber.all { it.isDigit() }) {
+            Toast.makeText(context, "Invalid mobile number", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
         return true
     }
 
@@ -87,13 +93,35 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         user["birthday"] = birthday
 
         db.collection("users")
-            .add(user)
-            .addOnSuccessListener {
-                Toast.makeText(context, "Successfully saved", Toast.LENGTH_SHORT).show()
+            .whereEqualTo("email", email)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    val documentId = documents.documents[0].id
+                    db.collection("users").document(documentId)
+                        .update(user)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Successfully updated", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(context, "Failed to update: ${e.message}", Toast.LENGTH_SHORT).show()
+                            e.printStackTrace()
+                        }
+                } else {
+                    db.collection("users")
+                        .add(user)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Successfully saved", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(context, "Failed to save: ${e.message}", Toast.LENGTH_SHORT).show()
+                            e.printStackTrace()
+                        }
+                }
             }
-            .addOnFailureListener { e ->  // Use 'e' or any name for the exception
-                Toast.makeText(context, "Failed to save: ${e.message}", Toast.LENGTH_SHORT).show()
-                e.printStackTrace() // Logs the detailed error in Logcat
+            .addOnFailureListener { e ->
+                Toast.makeText(context, "Failed to query: ${e.message}", Toast.LENGTH_SHORT).show()
+                e.printStackTrace()
             }
     }
 }
