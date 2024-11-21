@@ -7,12 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.senateelectioninfo.auth.model.service.impl.AccountServiceImpl
 import com.mobdeve.senateelectioninfo.databinding.FragmentProfileBinding
 import com.mobdeve.senateelectioninfo.splash.SplashActivity
@@ -26,12 +22,16 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private val accountService = AccountServiceImpl.getInstance()
 
     private lateinit var logout: Button
-    private lateinit var editProfile: ImageButton
+    private lateinit var editProfile: Button
+
     private lateinit var profileName: TextView
     private lateinit var profilePosition: TextView
     private lateinit var profileEmail: TextView
     private lateinit var profileBirthday: TextView
     private lateinit var profileContactNumber: TextView
+
+    private lateinit var profileHeaderName: TextView
+    private lateinit var profileHeaderEmail: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,29 +39,32 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         // Initialize views
         logout = binding.btnLogout
-        editProfile = binding.editProfileBtn
-        profileName = binding.profileName
-        profilePosition = binding.profilePosition // Change this to a dynamic field if needed
-        profileEmail = binding.profileEmail // Use the correct ID for email
-        profileBirthday = binding.profileBirthday // Add ID for birthday if missing
-        profileContactNumber = binding.profileContactNumber // Add ID for contact number if missing
+        editProfile = binding.btnProfileEdit
+
+        profileName = binding.txtProfileName
+        profileEmail = binding.txtProfileEmail // Use the correct ID for email
+        profileBirthday = binding.txtProfileBirthday // Add ID for birthday if missing
+        profileContactNumber = binding.txtProfileContactNumber // Add ID for contact number if missing
+
+        profileHeaderName = binding.txtProfileHeaderName
+        profileHeaderEmail = binding.txtProfileHeaderEmail
 
         if (accountService.hasUser()) {
             viewLifecycleOwner.lifecycleScope.launch {
                 val userProfile = accountService.getProfile()!!
 
-                profileName.text = userProfile.firstName + " " + userProfile.lastName
+                val name = userProfile.firstName + " " + userProfile.lastName
+
+                profileName.text = name
                 profileEmail.text = userProfile.email
                 profileBirthday.text = userProfile.birthday
                 profileContactNumber.text = userProfile.contactNumber
+
+                profileHeaderName.text = name
+                profileHeaderEmail.text = userProfile.email
             }
         }
 
@@ -79,6 +82,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         editProfile.setOnClickListener {
             replaceFragment(EditProfileFragment())
         }
+
+        return binding.root
     }
 
     private fun replaceFragment(fragment: Fragment) {
