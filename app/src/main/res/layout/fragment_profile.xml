@@ -18,56 +18,62 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/profile_pic"
-            android:background="@drawable/rectangle_border"
             android:layout_width="match_parent"
-            android:padding="8dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:background="@drawable/rectangle_border"
+            android:padding="8dp">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:scaleType="centerCrop"
                 android:background="@drawable/circular_image"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
                 app:shapeAppearanceOverlay="@style/CircularShape"
                 app:srcCompat="@drawable/profile_test" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/profile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:orientation="vertical"
-                android:layout_marginEnd="20sp">
+                android:layout_marginTop="24dp"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/profile_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Alex Salamanca"
-                    android:textColor="#000"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/profile_position"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Accountant"
-                    android:textColor="#888"
-                    android:textSize="14sp" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/profile_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Accountant"
+                android:textColor="#888"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/profile_name" />
 
             <ImageButton
                 android:id="@+id/editProfileBtn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/baseline_edit_24" />
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/baseline_edit_24"
+                android:background="@android:color/transparent" />
 
-        </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!--    profile info-->
         <LinearLayout
@@ -98,7 +104,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Email"
                     android:textColor="#000"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -121,7 +126,6 @@
                     android:id="@+id/profileBirthday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Birthday"
                     android:textColor="#000"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -146,7 +150,6 @@
                     android:id="@+id/profileContactNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Contact Number"
                     android:textColor="#000"
                     android:textSize="16sp" />
             </LinearLayout>

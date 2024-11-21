@@ -8,7 +8,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.firestore.FirebaseFirestore
+import com.mobdeve.senateelectioninfo.auth.model.User
+import com.mobdeve.senateelectioninfo.auth.model.service.impl.AccountServiceImpl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
@@ -18,6 +23,8 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     private lateinit var inputEmail: TextInputEditText
     private lateinit var inputBirthday: TextInputEditText
     private lateinit var inputContactNumber: TextInputEditText
+
+    private val accountService = AccountServiceImpl.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +40,9 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         inputBirthday = view.findViewById(R.id.inputBirthday)
         inputContactNumber = view.findViewById(R.id.inputContactNumber)
 
+        // Load current user data into fields
+        loadUserProfile()
+
         saveButton.setOnClickListener {
             val firstName = inputFirstName.text.toString().trim()
             val lastName = inputLastName.text.toString().trim()
@@ -41,12 +51,35 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             val contactNumber = inputContactNumber.text.toString().trim()
 
             if (validateInputs(firstName, lastName, email, birthday, contactNumber)) {
-                saveFireStore(firstName, lastName, email, contactNumber, birthday)
+                saveProfile(firstName, lastName, email, contactNumber, birthday)
                 replaceFragment(ProfileFragment())
             }
         }
 
         return view
+    }
+
+    private fun loadUserProfile() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val userProfile = accountService.getProfile()
+                withContext(Dispatchers.Main) {
+                    userProfile?.let {
+                        inputFirstName.setText(it.firstName)
+                        inputLastName.setText(it.lastName)
+                        inputEmail.setText(it.email)
+                        inputBirthday.setText(it.birthday)
+                        inputContactNumber.setText(it.contactNumber)
+                    } ?: run {
+                        Toast.makeText(context, "No profile found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Failed to load profile: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun validateInputs(
@@ -80,48 +113,35 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         fragmentTransaction.commit()
     }
 
-    private fun saveFireStore(
+    private fun saveProfile(
         firstName: String, lastName: String, email: String,
         contactNumber: String, birthday: String
     ) {
-        val db = FirebaseFirestore.getInstance()
-        val user: MutableMap<String, Any> = HashMap()
-        user["firstName"] = firstName
-        user["lastName"] = lastName
-        user["email"] = email
-        user["contactNumber"] = contactNumber
-        user["birthday"] = birthday
+        val updatedUser = User(
+            id = accountService.currentUserId,
+            email = email,
+            firstName = firstName,
+            lastName = lastName,
+            birthday = birthday,
+            contactNumber = contactNumber,
+            profilePicture = ""  // or use an existing one
+        )
 
-        db.collection("users")
-            .whereEqualTo("email", email)
-            .get()
-            .addOnSuccessListener { documents ->
-                if (!documents.isEmpty) {
-                    val documentId = documents.documents[0].id
-                    db.collection("users").document(documentId)
-                        .update(user)
-                        .addOnSuccessListener {
-                            Toast.makeText(context, "Successfully updated", Toast.LENGTH_SHORT).show()
-                        }
-                        .addOnFailureListener { e ->
-                            Toast.makeText(context, "Failed to update: ${e.message}", Toast.LENGTH_SHORT).show()
-                            e.printStackTrace()
-                        }
-                } else {
-                    db.collection("users")
-                        .add(user)
-                        .addOnSuccessListener {
-                            Toast.makeText(context, "Successfully saved", Toast.LENGTH_SHORT).show()
-                        }
-                        .addOnFailureListener { e ->
-                            Toast.makeText(context, "Failed to save: ${e.message}", Toast.LENGTH_SHORT).show()
-                            e.printStackTrace()
-                        }
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val success = accountService.updateProfile(updatedUser)
+                withContext(Dispatchers.Main) {
+                    if (success) {
+                        Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Failed to update profile", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(context, "Failed to query: ${e.message}", Toast.LENGTH_SHORT).show()
-                e.printStackTrace()
-            }
+        }
     }
 }
