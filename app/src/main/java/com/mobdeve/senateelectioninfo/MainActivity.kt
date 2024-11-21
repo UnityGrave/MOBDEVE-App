@@ -36,9 +36,6 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        // Replace with Home fragment on startup
-        replaceFragment(HomeFragment())
-
         binding.bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> replaceFragment(HomeFragment())
