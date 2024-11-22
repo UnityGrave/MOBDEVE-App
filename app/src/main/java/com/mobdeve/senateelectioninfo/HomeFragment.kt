@@ -1,24 +1,43 @@
 package com.mobdeve.senateelectioninfo
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
+import com.mobdeve.senateelectioninfo.auth.model.service.impl.AccountServiceImpl
+import com.mobdeve.senateelectioninfo.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment() {
+import kotlinx.coroutines.launch
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
-        arguments?.let {}
-    }
+    private lateinit var binding: FragmentHomeBinding
+
+    private lateinit var nickName: TextView
+
+    private val accountService = AccountServiceImpl.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        nickName = binding.txtHomeHeaderName
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            val userProfile = accountService.getProfile()!!
+            val name = "Hi, " + userProfile.firstName + "!"
+            nickName.text = name
+
+        }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return binding.root
     }
 }
