@@ -126,10 +126,11 @@ class SettingsFragment : Fragment() {
                         NOTIFICATION_PERMISSION_REQUEST_CODE
                     )
                 } else {
-                    // Permissions already granted, enable notifications
+                    // Permission already granted or not needed
                     enableNotifications(requireContext())
                 }
             } else {
+                // User disabled notifications
                 disableNotifications(requireContext())
             }
         }
@@ -192,8 +193,11 @@ class SettingsFragment : Fragment() {
 
         if (requestCode == NOTIFICATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, enable notifications
                 enableNotifications(requireContext())
+                binding.switchNotifications.isChecked = true
             } else {
+                // Permission denied, update UI to reflect this
                 binding.switchNotifications.isChecked = false
             }
         }
