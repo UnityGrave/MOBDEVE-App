@@ -1,12 +1,13 @@
 package com.mobdeve.senateelectioninfo
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
@@ -24,21 +25,27 @@ class ScannerFragment : Fragment() {
 
         // Initialize the barcode scanner view
         barcodeScannerView = view.findViewById(R.id.barcode_scanner)
+        barcodeScannerView?.setStatusText("")
 
         // Set up the scanner callback
         barcodeScannerView?.decodeContinuous(object : BarcodeCallback {
             override fun barcodeResult(result: BarcodeResult?) {
                 result?.let {
-                    setResult(it.text)
+                    handleScannedResult(it.text)
                 }
-            }
-
-            override fun possibleResultPoints(resultPoints: List<com.google.zxing.ResultPoint>) {
-                // Handle possible result points if needed
             }
         })
 
         return view
+    }
+
+    private fun handleScannedResult(scannedResult: String) {
+        if (scannedResult.startsWith("http://") || scannedResult.startsWith("https://")) {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(scannedResult))
+            startActivity(browserIntent)
+        } else {
+            setResult(scannedResult)
+        }
     }
 
     private fun setResult(scannedResult: String) {
@@ -48,13 +55,11 @@ class ScannerFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        // Start the scanner when the fragment is visible
         barcodeScannerView?.resume()
     }
 
     override fun onPause() {
         super.onPause()
-        // Pause the scanner when the fragment is not visible
         barcodeScannerView?.pause()
     }
 }
