@@ -9,11 +9,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import com.mobdeve.senateelectioninfo.auth.model.service.impl.AccountServiceImpl
 import com.mobdeve.senateelectioninfo.databinding.FragmentSettingsBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentSettingsBinding
+    private val accountService = AccountServiceImpl.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,38 +27,55 @@ class SettingsFragment : Fragment() {
     ): View {
         // Inflate the layout using the correct binding class
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         // Initialize views
         setupAppearanceOptions()
         setupNotificationSwitch()
-        setupSecurityOptions()
+        loadUserProfile()
+
+        return binding.root
+    }
+
+    private fun loadUserProfile() {
+        // Load the user profile and set the state of the 2FA switch based on the authenticator field
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val userProfile = accountService.getProfile()
+                withContext(Dispatchers.Main) {
+                    userProfile?.let {
+                        // Set the switch state based on the "authenticator" field
+                        binding.switch2FA.isChecked = it.authenticator == "enabled"
+
+                        // Set up the listener for 2FA switch
+                        setupSecurityOptions()
+                    } ?: run {
+                        // Handle case when no profile is found
+                    }
+                }
+            } catch (e: Exception) {
+                // Handle errors if loading the profile fails
+            }
+        }
+    }
+
+    private fun setupSecurityOptions() {
+        // Listener for enabling/disabling 2FA
+        binding.switch2FA.setOnCheckedChangeListener { _, isChecked ->
+            val newStatus = if (isChecked) "enabled" else "disabled"
+            updateTwoFactorAuthStatus(newStatus)
+        }
+    }
+
+    private fun updateTwoFactorAuthStatus(newStatus: String) {
+        // Update the authenticator field based on switch state
+        CoroutineScope(Dispatchers.IO).launch {
+            val updateResult = accountService.updateTwoFactorAuth(newStatus)
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         // Prevent the activity from restarting when changing night mode
-    }
-
-
-    private fun setupSecurityOptions() {
-        // Set default selection for Security (Disabled by default)
-        binding.switch2FA.isChecked = false
-
-        // Listener for enabling/disabling 2FA
-        binding.switch2FA.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                enable2FA()
-            }
-        }
-    }
-
-    private fun enable2FA() {
-        // logic for enabling two factor authentication
     }
 
     private fun setupAppearanceOptions() {

@@ -7,5 +7,6 @@ data class User (
     val lastName: String = "",
     val birthday: String = "",
     val contactNumber: String = "",
-    val profilePicture: String = ""
+    val profilePicture: String = "",
+    val authenticator: String = ""
 )

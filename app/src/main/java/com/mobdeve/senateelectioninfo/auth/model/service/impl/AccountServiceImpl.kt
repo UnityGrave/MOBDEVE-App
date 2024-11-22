@@ -6,6 +6,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.senateelectioninfo.auth.model.User
 import com.mobdeve.senateelectioninfo.auth.model.service.AccountService
 import com.mobdeve.senateelectioninfo.auth.model.service.UserProfileService
@@ -17,6 +18,7 @@ import kotlinx.coroutines.tasks.await
 
 class AccountServiceImpl : AccountService {
 
+    private val firestore = FirebaseFirestore.getInstance()
     private val userProfileService: UserProfileService = UserProfileServiceImpl()
 
     companion object {
@@ -74,7 +76,8 @@ class AccountServiceImpl : AccountService {
                 lastName = lastName,
                 birthday = birthday,
                 contactNumber = contactNumber,
-                profilePicture = ""
+                profilePicture = "",
+                authenticator = "disabled"
             )
             userProfileService.updateUserProfile(user)
             true
@@ -99,5 +102,18 @@ class AccountServiceImpl : AccountService {
     override suspend fun getProfile(): User? {
         val userId = currentUserId
         return userProfileService.getUserProfile(userId)
+    }
+
+    override suspend fun updateTwoFactorAuth(newStatus: String): Boolean {
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return false
+
+        return try {
+            val userRef = firestore.collection("users").document(currentUserId)
+            userRef.update("authenticator", newStatus).await()
+            true
+        } catch (e: Exception) {
+            Log.e("AccountService", "Failed to update 2FA status", e)
+            false
+        }
     }
 }

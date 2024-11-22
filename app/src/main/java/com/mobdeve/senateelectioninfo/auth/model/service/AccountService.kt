@@ -18,4 +18,6 @@ interface AccountService {
     suspend fun deleteAccount()
     suspend fun updateProfile(user: User): Boolean
     suspend fun getProfile(): User?
+    suspend fun updateTwoFactorAuth(newStatus: String): Boolean
+
 }
