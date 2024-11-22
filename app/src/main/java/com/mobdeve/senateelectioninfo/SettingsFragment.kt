@@ -39,15 +39,21 @@ class SettingsFragment : Fragment() {
     private fun loadUserProfile() {
         // Load the user profile and set the state of the 2FA switch based on the authenticator field
         CoroutineScope(Dispatchers.IO).launch {
-            val userProfile = accountService.getProfile()
-            withContext(Dispatchers.Main) {
-                userProfile?.let {
-                    // Set the switch state based on the "authenticator" field
-                    binding.switch2FA.isChecked = it.authenticator == "enabled"
+            try {
+                val userProfile = accountService.getProfile()
+                withContext(Dispatchers.Main) {
+                    userProfile?.let {
+                        // Set the switch state based on the "authenticator" field
+                        binding.switch2FA.isChecked = it.authenticator == "enabled"
 
-                    // Set up the listener for 2FA switch
-                    setupSecurityOptions()
+                        // Set up the listener for 2FA switch
+                        setupSecurityOptions()
+                    } ?: run {
+                        // Handle case when no profile is found
+                    }
                 }
+            } catch (e: Exception) {
+                // Handle errors if loading the profile fails
             }
         }
     }
