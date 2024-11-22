@@ -17,7 +17,8 @@
             android:text="Settings"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:textColor="?attr/colorOnBackground" />
 
         <!-- Appearance Section -->
         <TextView
@@ -28,7 +29,8 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="4dp"
+            android:textColor="?attr/colorOnBackground" />
 
         <RadioGroup
             android:id="@+id/radioGroupAppearance"
@@ -44,27 +46,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Auto"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnSurface" />
 
             <RadioButton
                 android:id="@+id/radio_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Day"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnSurface" />
 
             <RadioButton
                 android:id="@+id/radio_night"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Night"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnSurface" />
         </RadioGroup>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="8dp" />
 
         <!-- Account Section -->
         <TextView
@@ -75,7 +75,8 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="4dp"
+            android:textColor="?attr/colorOnBackground" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -89,14 +90,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Change Password"
-                android:textSize="16sp" />
-
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnSurface" />
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="8dp" />
 
         <!-- Notifications Section -->
         <TextView
@@ -107,7 +103,8 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="4dp"
+            android:textColor="?attr/colorOnBackground" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,18 +118,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Enable Notifications"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnSurface" />
 
             <Switch
                 android:id="@+id/switchNotifications"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="8dp" />
 
         <!-- Security Section -->
         <TextView
@@ -143,7 +136,8 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="4dp"
+            android:textColor="?attr/colorOnBackground" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -157,18 +151,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Enable 2FA Authentication"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnSurface" />
 
             <Switch
                 android:id="@+id/switch2FA"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="8dp" />
-
     </LinearLayout>
 </ScrollView>

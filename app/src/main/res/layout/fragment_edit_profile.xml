@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     android:padding="16dp"
     tools:context=".EditProfileFragment">
 
@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit Profile"
-        android:textColor="@android:color/black"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,12 +30,14 @@
         android:hint="First Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleEditProfile">
+        app:layout_constraintTop_toBottomOf="@id/titleEditProfile"
+        app:hintTextColor="?attr/colorOnSurface">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputFirstName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnSurface" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Last Name -->
@@ -47,12 +49,14 @@
         android:hint="Last Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inputFirstNameLayout">
+        app:layout_constraintTop_toBottomOf="@id/inputFirstNameLayout"
+        app:hintTextColor="?attr/colorOnSurface">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputLastName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnSurface" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Email -->
@@ -64,13 +68,15 @@
         android:hint="Email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inputLastNameLayout">
+        app:layout_constraintTop_toBottomOf="@id/inputLastNameLayout"
+        app:hintTextColor="?attr/colorOnSurface">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textColor="?attr/colorOnSurface" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Mobile Number -->
@@ -82,13 +88,15 @@
         android:hint="Mobile Number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inputEmailLayout">
+        app:layout_constraintTop_toBottomOf="@id/inputEmailLayout"
+        app:hintTextColor="?attr/colorOnSurface">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputContactNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:textColor="?attr/colorOnSurface" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Birthday -->
@@ -100,13 +108,15 @@
         android:hint="Birthday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inputContactNumberLayout">
+        app:layout_constraintTop_toBottomOf="@id/inputContactNumberLayout"
+        app:hintTextColor="?attr/colorOnSurface">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputBirthday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="date" />
+            android:inputType="date"
+            android:textColor="?attr/colorOnSurface" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Save Button -->
@@ -117,7 +127,7 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="?attr/colorPrimary"
         android:text="Save"
-        android:textColor="@android:color/white"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/inputBirthdayLayout" />
