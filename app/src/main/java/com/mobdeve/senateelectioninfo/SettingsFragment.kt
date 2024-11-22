@@ -1,6 +1,11 @@
 package com.mobdeve.senateelectioninfo
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,12 +14,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.mobdeve.senateelectioninfo.auth.model.service.impl.AccountServiceImpl
 import com.mobdeve.senateelectioninfo.databinding.FragmentSettingsBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.Manifest
+import androidx.core.app.NotificationManagerCompat
+
 
 class SettingsFragment : Fragment() {
 
@@ -51,7 +61,6 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupSecurityOptions() {
-        // Listener for enabling/disabling 2FA
         binding.switch2FA.setOnCheckedChangeListener { _, isChecked ->
             val newStatus = if (isChecked) "enabled" else "disabled"
             updateTwoFactorAuthStatus(newStatus)
@@ -59,15 +68,9 @@ class SettingsFragment : Fragment() {
     }
 
     private fun updateTwoFactorAuthStatus(newStatus: String) {
-        // Update the authenticator field based on switch state
         CoroutineScope(Dispatchers.IO).launch {
             val updateResult = accountService.updateTwoFactorAuth(newStatus)
         }
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        // Prevent the activity from restarting when changing night mode
     }
 
     private fun setupAppearanceOptions() {
@@ -84,7 +87,10 @@ class SettingsFragment : Fragment() {
         // Listener for appearance changes
         binding.radioGroupAppearance.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.radio_auto -> updateAppearanceMode("Auto")
+                R.id.radio_auto -> {
+                    updateAppearanceMode("Auto")
+                    showSampleNotification()
+                }
                 R.id.radio_day -> updateAppearanceMode("Day")
                 R.id.radio_night -> updateAppearanceMode("Night")
             }
@@ -102,24 +108,98 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupNotificationSwitch() {
-        // Set default value for notifications (enabled by default)
-        binding.switchNotifications.isChecked = true
+        val areNotificationsEnabled = NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
+        binding.switchNotifications.isChecked = areNotificationsEnabled
 
-        // Listener for enabling/disabling notifications
         binding.switchNotifications.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                enableNotifications()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                    ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    // Request the permission
+                    ActivityCompat.requestPermissions(
+                        requireActivity(),
+                        arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                        NOTIFICATION_PERMISSION_REQUEST_CODE
+                    )
+                } else {
+                    // Permissions already granted, enable notifications
+                    enableNotifications(requireContext())
+                }
             } else {
-                disableNotifications()
+                disableNotifications(requireContext())
             }
         }
     }
 
-    private fun enableNotifications() {
-        // Logic to enable notifications
+    private fun showSampleNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelId = "69"
+            val channelName = "notif_channel"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+
+            // Create notification channel
+            val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val channel = NotificationChannel(channelId, channelName, importance)
+            notificationManager.createNotificationChannel(channel)
+
+            val notification = android.app.Notification.Builder(requireContext(), channelId)
+                .setContentTitle("Auto Mode Enabled")
+                .setContentText("You have enabled Auto appearance mode.")
+                .setSmallIcon(R.drawable.baseline_notifications_24)
+                .setAutoCancel(true)
+                .build()
+
+            // Show the notification
+            notificationManager.notify(1, notification)
+        }
     }
 
-    private fun disableNotifications() {
-        // Logic to disable notifications
+    private fun enableNotifications(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelId = "69"
+            val channelName = "notif_channel"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+
+            val notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val channel = NotificationChannel(channelId, channelName, importance)
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun disableNotifications(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val channelId = "69"
+
+            val channel = NotificationChannel(channelId, "notif_channel", NotificationManager.IMPORTANCE_NONE)
+            notificationManager.createNotificationChannel(channel)
+
+            notificationManager.cancelAll()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == NOTIFICATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                enableNotifications(requireContext())
+            } else {
+                binding.switchNotifications.isChecked = false
+            }
+        }
+    }
+
+    companion object {
+        private const val NOTIFICATION_PERMISSION_REQUEST_CODE = 1001
     }
 }

@@ -107,7 +107,7 @@ class LogInActivity: AppCompatActivity() {
 
         // Set the title and message with centered gravity
         builder.setTitle("Two-Factor Authentication")
-        builder.setMessage("Enter the code")
+        builder.setMessage("Please enter the code")
 
         val input = android.widget.EditText(this)
         input.gravity = android.view.Gravity.CENTER
@@ -117,9 +117,6 @@ class LogInActivity: AppCompatActivity() {
             android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
         )
         input.layoutParams = layoutParams
-
-        val width = (resources.displayMetrics.widthPixels * 0.7).toInt()
-        input.layoutParams.width = width
 
         builder.setView(input)
 
