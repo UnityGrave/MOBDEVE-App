@@ -29,11 +29,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        splashViewModel = ViewModelProvider(this, SplashModelViewFactory(accountService, this.application)).get(SplashViewModel::class.java)
+        splashViewModel = ViewModelProvider(
+            this,
+            SplashModelViewFactory(accountService, this.application)
+        ).get(SplashViewModel::class.java)
+
         val splashIntent = splashViewModel.checkLoggedInState()
         if (splashIntent != null) {
             startActivity(splashIntent)
             finish()
+        }
+
+        // Check if there's a saved state. If not, load the initial fragment.
+        if (savedInstanceState == null) {
+            replaceFragment(HomeFragment()) // Set HomeFragment as the initial fragment
         }
 
         binding.bottomNavigationView.setOnItemSelectedListener { menuItem ->
