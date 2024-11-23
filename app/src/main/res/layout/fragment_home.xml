@@ -9,13 +9,13 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/grpHomeHeader"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/rounded_background"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="26dp"
+        android:padding="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -27,7 +27,7 @@
             app:contentPadding="12dp">
 
             <ImageView
-                android:id="@+id/imgProfilePicture"
+                android:id="@+id/imgHomeProfilePicture"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:tint="?attr/colorPrimary"
@@ -37,6 +37,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
             android:orientation="vertical">
 
             <TextView
@@ -67,26 +68,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginLeft="26dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="26dp"
-        android:layout_marginBottom="26dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/grpHomeHeader">
 
         <TextView
             android:id="@+id/txtHomeRecommended"
+            style="@style/Home_Heading"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_vertical|left"
-            android:text="Recommended"
-            android:textColor="?attr/colorOnBackground"
-            android:textSize="24sp" />
+            android:layout_height="wrap_content"
+            android:text="Recommended" />
 
 
         <HorizontalScrollView
@@ -94,80 +87,55 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingLeft="5dp">
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="260dp"
-                    android:layout_height="170dp"
-                    android:layout_margin="10dp"
-                    app:cardBackgroundColor="@color/md_theme_surfaceContainerLow_mediumContrast"
-                    app:cardCornerRadius="6dp"
-                    app:cardElevation="10dp">
+                <androidx.cardview.widget.CardView style="@style/Home_Recommended_CardView">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:gravity="left"
-                        android:orientation="vertical"
-                        android:padding="10dp">
+                        android:orientation="vertical">
 
                         <ImageView
+                            style="@style/Home_Recommended_Image"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginRight="5dp"
-                            android:background="@drawable/rounded_corners"
                             android:clipToOutline="true"
-                            android:scaleType="centerCrop"
                             android:src="@drawable/recommended_senators" />
 
                         <TextView
+                            style="@style/Home_Recommended_Label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Senator Profiles List"
-                            android:textSize="20sp" />
+                            android:text="Senator Profiles List" />
 
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="260dp"
-                    android:layout_height="170dp"
-                    android:layout_margin="10dp"
-                    app:cardBackgroundColor="@color/md_theme_surfaceContainerLow_mediumContrast"
-                    app:cardCornerRadius="6dp"
-                    app:cardElevation="10dp">
+                <androidx.cardview.widget.CardView style="@style/Home_Recommended_CardView">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"
-                        android:orientation="vertical"
-                        android:padding="10dp">
+                        android:orientation="vertical">
 
                         <ImageView
+                            style="@style/Home_Recommended_Image"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginRight="5dp"
-                            android:background="@drawable/rounded_corners"
                             android:clipToOutline="true"
-                            android:scaleType="centerCrop"
                             android:src="@drawable/recommended_partylist" />
 
                         <TextView
+                            style="@style/Home_Recommended_Label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Partylist Profiles List"
-                            android:textSize="20sp" />
+                            android:text="Partylist Profiles List" />
 
                     </LinearLayout>
 
@@ -180,14 +148,10 @@
 
         <TextView
             android:id="@+id/txtHomeRecommended2"
+            style="@style/Home_Heading"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_vertical|left"
-            android:text="Important Links"
-            android:textColor="?attr/colorOnBackground"
-            android:textSize="24sp" />
+            android:layout_height="wrap_content"
+            android:text="Important Links" />
 
         <LinearLayout
             android:layout_width="match_parent"
