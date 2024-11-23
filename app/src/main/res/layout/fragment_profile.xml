@@ -1,12 +1,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!-- Top Profile Header -->
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/grpProfileHeader"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="?attr/colorPrimary"
@@ -68,18 +67,19 @@
         android:text="@string/logout"
         android:textColor="?attr/colorOnTertiaryContainer"
         android:translationZ="6dp"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/grpProfileHeader"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/grpProfileHeader"
         app:rippleColor="?attr/colorOnTertiaryContainer" />
 
     <!-- Scrollable Content -->
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/grpProfileDetailsHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,7 +111,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/grpProfileDetailsHeader">
 
         <LinearLayout
             android:id="@+id/info_scrollable"
