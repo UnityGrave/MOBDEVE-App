@@ -1,6 +1,5 @@
 package com.mobdeve.senateelectioninfo
 
-import android.R
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,7 +13,6 @@ import com.mobdeve.senateelectioninfo.databinding.FragmentBallotBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
 
 class BallotFragment : Fragment() {
 
@@ -68,18 +66,15 @@ class BallotFragment : Fragment() {
         }
     }
 
-
     private fun populateSpinner(spinner: Spinner, data: List<String>) {
         val spinnerData = listOf("None selected") + data
 
         val adapter = ArrayAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item,
+            R.layout.spinner_item,
             spinnerData
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
     }
-
 }
-

@@ -10,6 +10,12 @@
     <string name="auth_signup">Sign Up</string>
     <string name="auth_login">Log In</string>
 
+
+
+    <string name="ballot_title">Sample Ballot Maker</string>
+    <string name="ballot_subtitle">Where you can test out your selected candidates!</string>
+    <string name="partylist_label">Party-list</string>
+
     <!-- Array for Senator Candidates -->
     <string-array name="senatorial_candidates">
         <item>John Doe</item>
