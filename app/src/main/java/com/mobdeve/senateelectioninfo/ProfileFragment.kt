@@ -66,12 +66,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 profileHeaderName.text = name
                 profileHeaderEmail.text = userProfile.email
             }
-
-            viewLifecycleOwner.lifecycleScope.launch {
-                val userProfile = accountService.getProfile()!!
-
-                profileName.text = userProfile.firstName
-            }
         }
 
         // Logout functionality
