@@ -1,67 +1,65 @@
 # Senate Election Info Application
 
-**Course**: MOBDEVE Major Course Output  
-**Program**: BSCS-ST1, BSIT2  
-**Team Members**:  
-- Akia, Dylan Lee (S14)  
-- Genota, Kean (S12)  
-- Refuerzo, Lloyd Dominic (S12)  
+An **Android app** that helps voters get informed before an election — browse candidate profiles, scan candidate QR codes, and build a sample ballot. Built natively in **Kotlin** with an **MVVM** architecture and a **Firebase** backend.
 
----
+## Overview
 
-## Description
+The app centralises Philippine senate-election information into a mobile experience: users register/log in, view senator profiles, jump to a candidate via QR scanning, and assemble a personal sample ballot to plan their vote.
 
-The **Senate Election Info Application** provides users with a user-friendly method of accessing election information, learning more about candidates, and simulating voting through a mock ballot. To enhance security, the application includes a sample ballot creator, QR code scanning for quick candidate profile access, and Two-Factor Authentication (2FA). Voters can use this app to become more informed and familiar with the voting process before election day.
+## Features
 
----
+- **Authentication** — register and log in (Firebase Authentication)
+- **Candidate profiles** — structured senator information (`HomeFragment`, `ProfileFragment`)
+- **QR scanner** — scan candidate QR codes for quick profile access (`ScannerFragment`, ZXing; uses the camera)
+- **Sample ballot** — select candidates to build a mock ballot (`BallotFragment`)
+- **Profile management** — edit your profile with an avatar (`EditProfileFragment`, CircleImageView)
+- **Settings & notifications** — app settings and push-style notifications (`POST_NOTIFICATIONS`)
+- **Splash flow** with an MVVM splash view-model
 
-## Services / APIs
+## Tech Stack
 
-- **Camera Usage (QR Scanner)**:  
-  Allows users to easily access candidate information by scanning QR codes displayed during campaigns or on campaign materials.
+| Layer | Technology |
+|-------|-----------|
+| Language | **Kotlin** |
+| Architecture | MVVM (AndroidX `ViewModel` + Lifecycle) |
+| Backend | **Firebase Authentication** + **Cloud Firestore** |
+| QR scanning | ZXing (`journeyapps:zxing-android-embedded`) |
+| UI | Material Components, ConstraintLayout, CircleImageView |
+| IDE | Android Studio |
 
-- **MySQL Database**:  
-  Stores essential data such as user profiles, candidate information, and mock ballots.
+## Architecture
 
-- **Facial Recognition (2FA)**:  
-  Provides additional security through biometric verification during user log-in, ensuring authorized access and data protection.
+```
+app/src/main/java/…/
+  MainActivity.kt, SplashActivity.kt
+  SplashViewModel.kt, SplashModelViewFactory.kt   # MVVM
+  HomeFragment · ProfileFragment · EditProfileFragment
+  ScannerFragment · BallotFragment · SettingsFragment
+  AuthValidator.kt                                # input/auth validation
+  Senator.kt · User.kt                            # data models
+```
 
-- **Firebase Cloud Messaging (FCM)**:  
-  A Google service used to send push notifications to iOS, Android, and web applications, keeping users informed about important election updates.
+Permissions used: `CAMERA` (QR scanning), `POST_NOTIFICATIONS`.
 
----
+## Getting Started
 
-## Functions
+### Prerequisites
+- Android Studio (latest) + Android SDK
+- A Firebase project (Authentication + Firestore enabled)
 
-| **Function**             | **Description**                                                                                                                                                             |
-|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Register**             | Users must register an account by providing their full name, birthday, email, and password before accessing other features of the app.                                         |
-| **Log-in**               | Users log in by entering their registered email and password to access the app's features.                                                                                     |
-| **QR Scanner Tab**       | Enables users to scan QR codes for quick redirection to candidate profile pages.                                                                                               |
-| **View Candidate Profile** | Users can view detailed profiles of each candidate, including their platform, background, and campaign promises.                                                            |
-| **Sample Ballot Maker**  | Users can create sample ballots by selecting candidates, simulating the election process. They can also print or save the mock ballots for reference on election day.          |
-| **Two-Factor Authenticator** | Adds an extra layer of security by requiring facial recognition, in addition to a password, to ensure authorized access and protect user information.                      |
-| **Election Reminders**   | Sends push notifications to remind users of important election dates such as registration deadlines, debates, and election day.                                                |
+### Setup
+```bash
+git clone https://github.com/UnityGrave/MOBDEVE-App.git
+```
+1. Open the project in **Android Studio** and let Gradle sync.
+2. Add your Firebase **`google-services.json`** to `app/`.
+3. Enable **Authentication** and **Cloud Firestore** in the Firebase console.
+4. Run on an emulator or device (▶).
 
----
+## Developed At
 
-## Installation Instructions
-
-1. Clone the repository using the following command:
-    ```bash
-    git clone https://github.com/UnityGrave/MOBDEVE-App
-    ```
-
-2. Open the project in **Android Studio**.
-
-3. Sync the project with Gradle files to ensure all dependencies are installed.
-
-4. Configure your MySQL database and ensure Firebase services (such as FCM and Authentication) are set up.
-
-5. Run the application on your Android device or emulator.
-
----
+Mobile Device Programming (MOBDEVE) major course output at **De La Salle University**.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT — see [`LICENSE`](LICENSE). 
